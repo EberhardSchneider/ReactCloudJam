@@ -19,7 +19,6 @@ class Store {
     });
 
     console.table(this.data.pattern);
-
   }
 }
 

@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const PlayButton = (props) => {
+import ToggleButton from './ToggleButton.jsx';
+
+const PlayButton = () => {
   return (
-    <button
-      className="primary-button two columns"
-      id="play-button"
-      onClick={props.clickHandler}>
-      Play
-    </button>
+    <ToggleButton
+      text={'PLAY'}/>
   );
 };
 
