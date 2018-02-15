@@ -1,15 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const buttonStyle = {
-  textAlign: 'center',
-  fontSize: '2em',
-  position: 'relative',
-  height: '1.5em',
-  width: '13.3333333333%',
-  border: 'solid green 2px',
-  borderRadius: '5px'
-};
+
 
 export default class ToggleButton extends React.Component {
 
@@ -23,7 +15,8 @@ export default class ToggleButton extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick(e) {
+    e.preventDefault();
     this.setState((prevState) => {
       return {
         active: !prevState.active
@@ -38,21 +31,20 @@ export default class ToggleButton extends React.Component {
     } = this.props;
 
     const toggleStyle = this.state.active ? {
+      color: '#fff',
       backgroundColor: 'green'
     } : {
+      color: '#000',
       backgroundColor: 'white'
     };
-    const style = {
-      ...buttonStyle,
-      ...toggleStyle
-    };
+
     return (
-      <div
-        className="toggle-button"
-        style={style}
+      <button
+        className="toggle-button button-primary"
+        style={toggleStyle}
         onClick={this.handleClick}>
         {text}
-      </div>
+      </button>
     );
   }
 }
