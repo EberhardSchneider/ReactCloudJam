@@ -1,0 +1,15 @@
+body {
+  background-color: #223;
+}
+
+.active {
+  background-color: #99a !important;
+}
+
+#stop-button {
+  margin-left: 15px;
+}
+
+#display-position {
+  color: white;
+}

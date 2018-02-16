@@ -1,20 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import PlayButton from './ToolBar/PlayButton.jsx';
-import StopButton from './ToolBar/StopButton.jsx';
-import DisplayPosition from './ToolBar/DisplayPosition.jsx';
+import storeProvider from '../storeProvider';
+
+import PlayStop from './ToolBar/PlayStop';
+import DisplayPosition from './ToolBar/DisplayPosition';
 
 
 
 const ToolBar = (props) => {
+
   return (
     <div className="row">
-      <PlayButton/>
-      <StopButton/>
-      <DisplayPosition position={'2.4'}/>
+      <PlayStop/>
+      <DisplayPosition/>
     </div>
   );
 };
+
 
 export default ToolBar;

@@ -1,17 +1,43 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import storeProvider from '../../storeProvider';
 
-const DisplayPosition = (props) => {
-  return (
-    <h4 className="display-position two columns">
-      {props.position}
-    </h4>
-  );
-};
+class DisplayPosition extends React.Component {
 
-DisplayPosition.propTypes = {
-  position: PropTypes.string.isRequired
-};
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      playPosition: ''
+    };
+  }
 
-export default DisplayPosition;
+  getAppState() {
+    const {
+      playPosition
+    } = this.props.store.getState();
+    this.setState({
+      playPosition
+    });
+  }
+
+  componentDidMount() {
+    this.subId = this.props.store.subscribe(this.getAppState.bind(this));
+  }
+
+  componentWillUnmount() {
+    this.props.store.unsubscribe(this.subId);
+  }
+
+  render() {
+
+    return (
+      <h4
+        className="two columns"
+        id="display-position">
+        {this.state.playPosition}
+      </h4>
+    );
+  }
+}
+
+export default storeProvider(DisplayPosition);

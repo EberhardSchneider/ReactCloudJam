@@ -6,7 +6,7 @@ module.exports = {
   context: path.join(__dirname, 'app'),
   entry: [
     'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-    './app.jsx'
+    './renderers/dom.js'
   ],
   output: {
     filename: 'app.js',
@@ -14,16 +14,12 @@ module.exports = {
   },
   module: {
     loaders: [{
-        test: /\.jsx$/,
+        test: /\.(js|jsx)$/,
         loader: 'babel-loader',
         include: path.join(__dirname, 'app'),
         exclude: /node_modules/,
         query: {
-          presets: [
-            "react",
-            "es2015",
-            "stage-0"
-          ]
+          presets: ['react', 'es2015', 'stage-0']
         }
       },
       {
@@ -34,9 +30,12 @@ module.exports = {
 
 
   },
-  devtool: "eval-source-map",
+  devtool: 'eval-source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
-  ]
-}
+  ],
+  resolve: {
+    extensions: ['.js', '.jsx']
+  }
+};

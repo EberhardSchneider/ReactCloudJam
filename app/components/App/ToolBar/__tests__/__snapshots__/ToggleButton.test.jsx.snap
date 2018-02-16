@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`button should be the same as last time 1`] = `
+<button
+  className="toggle-button button-primary"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "white",
+      "color": "#000",
+    }
+  }
+/>
+`;
