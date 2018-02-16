@@ -15,7 +15,7 @@ class Store {
     this.data = {
       nTracks: initialData.nTracks,
       length: initialData.length,
-      pattern: Array(initialData.nTracks).fill(Array(initialData.length).fill(0)),
+      pattern: Array(initialData.length).fill(Array(initialData.nTracks).fill(0)),
       samples: Array(initialData.nTracks).fill(''),
       playPosition: 0,
       playing: false,

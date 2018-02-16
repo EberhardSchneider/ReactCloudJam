@@ -6,9 +6,7 @@ class DisplayPosition extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      playPosition: ''
-    };
+    this.state = this.state = props.store.getState();
   }
 
   getAppState() {

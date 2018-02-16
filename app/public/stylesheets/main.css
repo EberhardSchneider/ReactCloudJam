@@ -13,3 +13,20 @@ body {
 #display-position {
   color: white;
 }
+
+#pattern {
+  position: absolute;
+  border: solid 1px white;
+  border-radius: 5px;
+  padding: 1em;
+  color: #fff;
+}
+
+#pattern div {
+  text-align: center;
+}
+
+#pattern.active {
+  background-color: #fff;
+  color: white;
+}
