@@ -7,9 +7,7 @@ class PlayStop extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      playing: false
-    };
+    this.state = props.store.getState();
   }
   getAppState() {
     const {

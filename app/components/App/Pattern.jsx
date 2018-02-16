@@ -34,6 +34,15 @@ class Pattern extends React.Component {
     this.subId = this.props.store.subscribe(this.getAppState.bind(this));
   }
 
+  cellClickHandler(col, row) {
+    let pattern = this.state.pattern;
+    const newValue = 1 - pattern[col][row];
+    pattern[col][row] = newValue;
+    this.props.store.setState({
+      pattern
+    });
+  }
+
 
   render() {
     return (
@@ -43,7 +52,9 @@ class Pattern extends React.Component {
             <Column
               key={index}
               data={column}
-              active={this.state.playPosition == index ? true : false}/>
+              colNumber={index}
+              active={this.state.playPosition == index ? true : false}
+              handleCellClick={this.cellClickHandler.bind(this)}/>
           ))
         }
       </div>

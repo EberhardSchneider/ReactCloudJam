@@ -5,6 +5,7 @@ import '../public/stylesheets/main.css';
 
 import ToolBar from './App/ToolBar';
 import Pattern from './App/Pattern';
+import Player from './App/Player';
 
 
 class App extends React.Component {
@@ -27,6 +28,7 @@ class App extends React.Component {
       <div>
         <ToolBar/>
         <Pattern/>
+        <Player/>
       </div>
     );
   }

@@ -12,11 +12,18 @@ class Store {
       length: 16
     };
 
+    const samples = [
+      '../../samples/01.wav',
+      '../../samples/04.wav',
+      '../../samples/06.wav',
+      '../../samples/07.wav'
+    ];
+
     this.data = {
       nTracks: initialData.nTracks,
       length: initialData.length,
       pattern: Array(initialData.length).fill(Array(initialData.nTracks).fill(0)),
-      samples: Array(initialData.nTracks).fill(''),
+      samples: samples,
       playPosition: 0,
       playing: false,
     };

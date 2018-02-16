@@ -10,7 +10,12 @@ class Column extends React.Component {
         className={this.props.active ? 'active' : ''}>
         {
           this.props.data.map((cell, index) => (
-            <div key={index} style={{width: '2em'}}>{cell}</div>
+            <div
+              key={index}
+              style={{width: '2em'}}
+              onClick={this.props.handleCellClick.bind(this, this.props.colNumber, index)}>
+              {cell}
+            </div>
           ))
         }
       </div>
@@ -20,7 +25,9 @@ class Column extends React.Component {
 
 Column.propTypes = {
   data: PropTypes.array,
-  active: PropTypes.bool
+  active: PropTypes.bool,
+  colNumber: PropTypes.number,
+  handleCellClick: PropTypes.func
 };
 
 export default Column;
