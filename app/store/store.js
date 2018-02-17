@@ -1,10 +1,10 @@
+import Player from '../player/SamplePlayer';
+
+
 const TICK_INTERVAL = 100;
 
 
 class Store {
-
-
-
   constructor(data) {
 
     const initialData = data || {
@@ -19,6 +19,9 @@ class Store {
       '../../samples/07.wav'
     ];
 
+    this.player = new Player(samples);
+    console.log(this.player);
+
     this.data = {
       nTracks: initialData.nTracks,
       length: initialData.length,
@@ -31,7 +34,6 @@ class Store {
     this.listeners = [];
 
     this.listenerId = 0;
-
   }
 
 
@@ -92,6 +94,7 @@ class Store {
     this.setState({
       playPosition
     });
+    this.player.playPattern(this.data.pattern[this.data.playPosition]);
   }
 
   triggerListeners() {
