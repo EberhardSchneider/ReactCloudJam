@@ -1,11 +1,15 @@
 import Player from '../player/SamplePlayer';
-
+import Scheduler from '../player/Scheduler';
 
 const TICK_INTERVAL = 100;
 
 
 class Store {
   constructor(data) {
+
+    const context = new AudioContext();
+    const s = new Scheduler(context);
+    s.start(500);
 
     const initialData = data || {
       nTracks: 4,
@@ -19,8 +23,7 @@ class Store {
       '../../samples/07.wav'
     ];
 
-    this.player = new Player(samples);
-    console.log(this.player);
+
 
     this.data = {
       nTracks: initialData.nTracks,
@@ -94,7 +97,7 @@ class Store {
     this.setState({
       playPosition
     });
-    this.player.playPattern(this.data.pattern[this.data.playPosition]);
+
   }
 
   triggerListeners() {
