@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 export default class SamplePlayer {
-  constructor(filenameArray) {
+  constructor(tick, filenameArray) {
+    // tick function is injected from store
+
     // cross browser context definition, see mozilla doc
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioContext = new AudioContext();
@@ -35,7 +37,10 @@ export default class SamplePlayer {
   playPattern(array) {
     array.map((cell, index) => {
       if (cell != 0) {
-        this.audioSources[index].start();
+        const audioSource = this.audioContext.createBufferSource();
+        audioSource.buffer = this.audioBuffers[index];
+        audioSource.connect(this.audioContext.destination);
+        audioSource.start();
       }
     });
   }
