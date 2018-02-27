@@ -1,10 +1,10 @@
-import Player from '../player/SamplePlayer';
+import Player from '../player/Player';
 
 class Store {
   constructor(data) {
     const initialData = data || {
       nTracks: 4,
-      length: 16
+      nBeats: 16
     };
 
     const samples = [
@@ -14,16 +14,25 @@ class Store {
       '../../samples/07.wav'
     ];
 
-    this.player = new Player(samples);
+
 
     this.data = {
       nTracks: initialData.nTracks,
-      length: initialData.length,
-      pattern: Array(initialData.length).fill(Array(initialData.nTracks).fill(0)),
+      nBeats: initialData.nBeats,
+      pattern: Array(initialData.nBeats).fill(Array(initialData.nTracks).fill(0)),
       samples: samples,
       playPosition: 0, // in ms
       playing: false,
     };
+
+
+    this.player = new Player();
+
+    samples.map((filename) => {
+      this.player.addSampleFromFilename(filename);
+    });
+
+    this.player.setPattern(this.data.pattern);
 
     this.listeners = [];
 
@@ -37,12 +46,14 @@ class Store {
       ...newState
     };
     this.data = mergedState;
-    //
-    // if (this.data.playing) {
-    //   this.startTick();
-    // } else {
-    //   this.stopTick();
-    // }
+
+    if (this.data.playing) {
+      this.player.start();
+    } else {
+      this.player.stop();
+    }
+
+    this.player.setPattern(this.data.pattern);
 
     this.triggerListeners();
   }

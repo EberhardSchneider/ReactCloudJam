@@ -1,15 +1,12 @@
 export default class Scheduler {
-
-
   constructor(callback) {
 
-    this.SCHEDULE_FREQUENCY = 500;
+    this.SCHEDULE_FREQUENCY = 100;
 
     this.eventQueue = [];
     this.callback = callback;
 
     this.bpm = 120;
-    this.latency = 50; // latency in ms
     this._running = false;
   }
 
@@ -57,7 +54,8 @@ export default class Scheduler {
       .filter((event) => {
         return (event.timestamp >= now && event.timestamp <= now + this.deltaT);
       })
-      .map((event) => {
+      .map((event, index) => {
+        delete this.eventQueue[index];
         this.callback(event);
       });
 
