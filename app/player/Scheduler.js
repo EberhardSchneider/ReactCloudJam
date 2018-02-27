@@ -1,46 +1,80 @@
 export default class Scheduler {
 
 
-  constructor(audioContext, callback) {
-    const SCHEDULE_FREQUENCY = 500;
-    this.context = audioContext;
+  constructor(callback) {
+
+    this.SCHEDULE_FREQUENCY = 500;
+
     this.eventQueue = [];
+    this.callback = callback;
+
     this.bpm = 120;
     this.latency = 50; // latency in ms
-    this.running = false;
+    this._running = false;
   }
 
-  start(startBeat, bpm = 120) {
+  start(startTime) {
     this.deltaT = this.SCHEDULE_FREQUENCY;
-    this.startTime = this.context.currentTime + this.latency;
+    this.currentTime = startTime;
     this.lastTime = this.startTime;
-    this.running = true;
+    this._running = true;
 
-    this.scheduleEvents.bind(this)();
+    this._schedulerHandle = setInterval(this.scheduleEvents.bind(this), this.SCHEDULE_FREQUENCY);
+  }
+
+  stop() {
+    if (this._running) {
+      this._running = false;
+      clearInterval(this._schedulerHandle);
+    }
+  }
+
+  setTime(newTime) {
+    if (!this._running) {
+      this.currentTime = newTime;
+      this.lastTime = newTime;
+    } else {
+      this.currentTime = newTime;
+    }
+  }
+
+  isRunning() {
+    return this._running;
+  }
+
+  setScheduleFrequency(freq) {
+    this.SCHEDULE_FREQUENCY = freq;
+  }
+
+  getScheduleFrequency() {
+    return this.SCHEDULE_FREQUENCY;
   }
 
   scheduleEvents() {
-    const currentTime = this.context.currentTime;
+    const now = this.currentTime;
 
-    while (this.eventQueue[0].timestamp < this.lastTime + 2 * this.deltaT) {
-      callback(this.eventQueue[0]);
-      delete(this.eventQueue[0]);
-    };
+    this.eventQueue
+      .filter((event) => {
+        return (event.timestamp >= now && event.timestamp <= now + this.deltaT);
+      })
+      .map((event) => {
+        this.callback(event);
+      });
 
-    this.lastTime = currentTime;
-    setTimeout(this.scheduleEvents.bind(this), this.deltaT - error);
+    this.currentTime += this.deltaT;
   }
 
   // add single event or array of events to queue
   addToQueue(events) {
-    // check if single event or array
-    // add events
-    // sort queue
+    const eventsArray = [].concat(events);
+    eventsArray.map((event) => {
+      this.eventQueue.push(event);
+    });
   }
 
   // delete all events in queue
   clearQueue() {
-
+    this.eventQueue = [];
   }
 
 }
