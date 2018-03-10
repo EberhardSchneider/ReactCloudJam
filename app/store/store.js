@@ -1,5 +1,5 @@
-import Player from '../player/SamplePlayer';
-import Scheduler from '../player/Scheduler';
+import Player from '../sequencer/Sequencer';
+import Scheduler from '../sequencer/Scheduler';
 
 const TICK_INTERVAL = 100;
 
