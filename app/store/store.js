@@ -1,16 +1,15 @@
+<<<<<<< HEAD
 import Player from '../sequencer/Sequencer';
 import Scheduler from '../sequencer/Scheduler';
 
 const TICK_INTERVAL = 100;
 
+=======
+import Player from '../player/SamplePlayer';
+>>>>>>> 8425c57b30b9c1dc580275115208bf4424604dde
 
 class Store {
   constructor(data) {
-
-    const context = new AudioContext();
-    const s = new Scheduler(context);
-    s.start(500);
-
     const initialData = data || {
       nTracks: 4,
       length: 16
@@ -23,14 +22,14 @@ class Store {
       '../../samples/07.wav'
     ];
 
-
+    this.player = new Player(samples);
 
     this.data = {
       nTracks: initialData.nTracks,
       length: initialData.length,
       pattern: Array(initialData.length).fill(Array(initialData.nTracks).fill(0)),
       samples: samples,
-      playPosition: 0,
+      playPosition: 0, // in ms
       playing: false,
     };
 
@@ -46,12 +45,12 @@ class Store {
       ...newState
     };
     this.data = mergedState;
-
-    if (this.data.playing) {
-      this.startTick();
-    } else {
-      this.stopTick();
-    }
+    //
+    // if (this.data.playing) {
+    //   this.startTick();
+    // } else {
+    //   this.stopTick();
+    // }
 
     this.triggerListeners();
   }
@@ -75,30 +74,25 @@ class Store {
     }
   }
 
-  startTick = () => {
-    if (!this.tickId)
-      this.tickId = setInterval(this.tick.bind(this), TICK_INTERVAL);
-
-  }
-
-  stopTick = () => {
-    if (this.tickId) {
-      clearInterval(this.tickId);
-      this.tickId = undefined;
-    }
-  }
-
-  tick() {
-    let {
-      playPosition
-    } = this.data;
-    playPosition += 1;
-    playPosition %= this.data.length;
-    this.setState({
-      playPosition
-    });
-
-  }
+  // startTick = () => {
+  //   this.scheduler.start(this.data.playPosition * TICK_INTERVAL);
+  // }
+  //
+  // stopTick = () => {
+  //   this.scheduler.stop();
+  // }
+  //
+  // tick() {
+  //   let {
+  //     playPosition
+  //   } = this.data;
+  //   playPosition += 1;
+  //   playPosition %= this.data.length;
+  //   this.setState({
+  //     playPosition
+  //   });
+  //
+  // }
 
   triggerListeners() {
     this.listeners.map(listener => listener());
