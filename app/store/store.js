@@ -1,4 +1,8 @@
-import Player from '../player/Player';
+import Player from '../sequencer/Sequencer';
+import Scheduler from '../sequencer/Scheduler';
+
+const TICK_INTERVAL = 100;
+
 
 class Store {
   constructor(data) {
