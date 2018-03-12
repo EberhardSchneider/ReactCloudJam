@@ -1,17 +1,22 @@
-export default class Sequencer {
-  // INTERFACE
+import AudioAPI from './Audio.js';
+import Scheduler from './Scheduler';
 
-  // head position in beats
-  // tempo in bpm
-  // audioContext here or in Scheduler????
-  // events: [{ track, pos, velocity }]
-  // audio API: Scheduler, context, playSound
+export default class Sequencer {
+
+  constructor() {
+    this._audioAPI = new AudioAPI();
+    this._scheduler = new Scheduler(this._audioAPI);
+  }
 
   setHead() {}
 
-  play() {}
+  play() {
+    this._scheduler.start();
+  }
 
-  stop() {}
+  stop() {
+    this._scheduler.stop();
+  }
 
   addEvent() {}
 

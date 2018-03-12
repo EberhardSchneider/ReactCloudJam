@@ -1,5 +1,4 @@
-import Player from '../sequencer/Sequencer';
-import Scheduler from '../sequencer/Scheduler';
+import Sequencer from '../sequencer/Sequencer';
 
 const TICK_INTERVAL = 100;
 
@@ -30,13 +29,13 @@ class Store {
     };
 
 
-    this.player = new Player();
+    this._sequencer = new Sequencer();
 
     samples.map((filename) => {
-      this.player.addSampleFromFilename(filename);
+      // this._sequencer.addSampleFromFilename(filename);
     });
 
-    this.player.setPattern(this.data.pattern);
+    // this._sequencer.setPattern(this.data.pattern);
 
     this.listeners = [];
 
@@ -52,12 +51,12 @@ class Store {
     this.data = mergedState;
 
     if (this.data.playing) {
-      this.player.start();
+      this._sequencer.play();
     } else {
-      this.player.stop();
+      this._sequencer.stop();
     }
 
-    this.player.setPattern(this.data.pattern);
+    // this._sequencer.setPattern(this.data.pattern);
 
     this.triggerListeners();
   }

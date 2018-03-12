@@ -1,6 +1,10 @@
-class Audio {
+export default class AudioAPI {
   constructor() {
     this._audioContext = new AudioContext();
+  }
+
+  getCurrentTime() {
+    return this._audioContext.currentTime;
   }
 
   playBuffer(buffer, time) {
