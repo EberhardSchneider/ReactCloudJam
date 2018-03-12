@@ -36,8 +36,14 @@ class Pattern extends React.Component {
 
   cellClickHandler(col, row) {
     let pattern = this.state.pattern;
-    const newValue = 1 - pattern[col][row];
-    pattern[col][row] = newValue;
+    // const newValue = 1 - pattern[col][row];
+    console.log(`Setting row: ${row} col:${col} to value: ${1}`);
+    console.log('Before:');
+    console.table(pattern[col][row]);
+    pattern[col][row] = 1;
+    console.table(pattern[col][row]);
+
+    console.log('After:');
     this.props.store.setState({
       pattern
     });

@@ -17,12 +17,16 @@ class Store {
       '../../samples/07.wav'
     ];
 
-
+    // initialize pattern Array
+    let pattern = Array(initialData.nBeats);
+    for (let i = 0; i < pattern.length; i++) {
+      pattern[i] = Array(initialData.nTracks).fill(0);
+    }
 
     this.data = {
       nTracks: initialData.nTracks,
       nBeats: initialData.nBeats,
-      pattern: Array(initialData.nBeats).fill(Array(initialData.nTracks).fill(0)),
+      pattern: pattern,
       samples: samples,
       playPosition: 0, // in ms
       playing: false,
