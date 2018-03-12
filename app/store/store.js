@@ -1,8 +1,5 @@
 import Sequencer from '../sequencer/Sequencer';
 
-const TICK_INTERVAL = 100;
-
-
 class Store {
   constructor(data) {
     const initialData = data || {
@@ -36,10 +33,10 @@ class Store {
     this._sequencer = new Sequencer();
 
     samples.map((filename) => {
-      // this._sequencer.addSampleFromFilename(filename);
+      this._sequencer.addSample(filename);
     });
 
-    // this._sequencer.setPattern(this.data.pattern);
+    this._sequencer.setPattern(this.data.pattern);
 
     this.listeners = [];
 
@@ -60,7 +57,7 @@ class Store {
       this._sequencer.stop();
     }
 
-    // this._sequencer.setPattern(this.data.pattern);
+    this._sequencer.setPattern(this.data.pattern);
 
     this.triggerListeners();
   }

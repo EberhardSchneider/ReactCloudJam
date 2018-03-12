@@ -15,7 +15,7 @@ const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
 
 const compiler = webpack(webpackConfig);
-const timefix = 11000;
+const timefix = 11000; // webpack bugfix, see https://github.com/webpack/watchpack/issues/25
 compiler.plugin('watch-run', (watching, callback) => {
   watching.startTime += timefix;
   callback();

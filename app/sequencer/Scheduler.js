@@ -6,6 +6,7 @@ export default class Scheduler {
   constructor(audioAPI, callback) {
 
     this._audioAPI = audioAPI;
+    this._callback = callback;
     this._eventQueue = [];
 
     this._latency = 50; // latency in ms
@@ -14,7 +15,7 @@ export default class Scheduler {
   }
 
   start() {
-    this._deltaT = 500.0;
+    this._deltaT = 1000.0 / SCHEDULE_FREQUENCY;
 
     // startTime stores the audioContext time in which the scheduler is started
     // to calculate time in events coordinate system substract startTime
@@ -63,13 +64,13 @@ export default class Scheduler {
     console.log('Audio time:\t\t' + this._audioTime);
     console.log('Scheduler time:\t\t' + now);
 
-    // this._eventQueue
-    //   .filter((event) => {
-    //     return (event.timestamp >= now && event.timestamp <= now + this._deltaT);
-    //   })
-    //   .map((event) => {
-    //     this.callback(event);
-    //   });
+    this._eventQueue
+      .filter((event) => {
+        return (event.timestamp >= now && event.timestamp <= now + this._deltaT);
+      })
+      .map((event) => {
+        this._callback(event);
+      });
 
   }
 
