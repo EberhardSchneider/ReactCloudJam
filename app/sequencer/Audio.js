@@ -11,13 +11,16 @@ export default class AudioAPI {
   }
 
   playBuffer(buffer, time) {
-    const audioNode = this._audioContext.createBufferSourceNode();
+    const audioNode = this._audioContext.createBufferSource();
     audioNode.buffer = buffer;
+    audioNode.connect(this._audioContext.destination);
     audioNode.start(time);
+
   }
 
   scheduleSample(index, timestamp) {
     if (index > 0 && index < this._sampleBuffer.length) {
+      console.log('Play at timestamp: ' + timestamp);
       this.playBuffer(this._sampleBuffer[index], timestamp);
     }
   }

@@ -53,7 +53,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 
-console.log('Dirname:' + __dirname);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'samples')));
 

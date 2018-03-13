@@ -1,4 +1,4 @@
-const SCHEDULE_FREQUENCY = 10; // times per second
+const SCHEDULE_FREQUENCY = 2; // times per second
 
 export default class Scheduler {
 
@@ -9,7 +9,7 @@ export default class Scheduler {
     this._callback = callback;
     this._eventQueue = [];
 
-    this._latency = 50; // latency in ms
+    this._latency = 0.05; // latency in ms
     this._running = false;
 
   }
@@ -19,8 +19,8 @@ export default class Scheduler {
 
     // startTime stores the audioContext time in which the scheduler is started
     // to calculate time in events coordinate system substract startTime
-    this._startTime = this._audioAPI.getCurrentTime();
-    this._audioTime = 0.0;
+    this._startTime = this._audioAPI.getCurrentTime() + this._latency;
+    this._audioTime = this._startTime;
 
     this._lastTime = this._startTime;
     this._running = true;
@@ -66,10 +66,13 @@ export default class Scheduler {
 
     this._eventQueue
       .filter((event) => {
-        return (event.timestamp >= now && event.timestamp <= now + this._deltaT);
+        return (event.time >= now && event.time <= now + this._deltaT / 1000.0);
       })
       .map((event) => {
-        this._callback(event);
+        this._callback({
+          sample: event.sample,
+          time: event.time + this._startTime
+        });
       });
 
   }

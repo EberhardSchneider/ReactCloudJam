@@ -24,11 +24,15 @@ export default class Sequencer {
         }
       });
     });
-    console.log('Events beat');
-    console.log(this._eventsBeat);
-    this._eventsTime = this.convertEventsToTime(this._eventsBeat);
-    console.log('Events time');
-    console.log(this._eventsTime);
+
+    this._eventsTime = [];
+    this._eventsBeat.map((event) => {
+      this._eventsTime.push({
+        sample: event.sample,
+        time: this.convertBeatsToTime(event.time)
+      });
+    });
+
   }
 
   addSample(filename) {
@@ -54,7 +58,7 @@ export default class Sequencer {
     console.log('Scheduling:');
     console.log(event);
     if (!event.time) return;
-    this._audioAPI.scheduleSample(event.sample, event.timestamp);
+    this._audioAPI.scheduleSample(event.sample, event.time);
     // }
     //
     // fillSchedulerQueue() {
@@ -71,7 +75,7 @@ export default class Sequencer {
     //   });
   }
 
-  convertBeatsToTime(beat, startBeat = 1, bpm = 240) {
+  convertBeatsToTime(beat, startBeat = 0, bpm = 299) {
     if (bpm == 0)
       throw new Error('divByZero: cannnot handle tempo of 0 bpm.');
     const deltaBeat = beat - startBeat;
@@ -80,11 +84,12 @@ export default class Sequencer {
     return newTime;
   }
 
-  convertEventsToTime(eventsArray, startBeat = 1, bpm = 120) {
+  convertEventsToTime(eventsArray, startBeat = 0, bpm = 30) {
 
     if (bpm == 0)
       throw new Error('divByZero: cannnot handle tempo of 0 bpm.');
-    const converted = eventsArray.map((event) => {
+    let arrayClone = eventsArray.slice(0);
+    const converted = arrayClone.map((event) => {
       event.time = this.convertBeatsToTime(event.time, startBeat, bpm);
       return event;
     });

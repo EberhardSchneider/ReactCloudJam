@@ -17,7 +17,7 @@ class Store {
     // initialize pattern Array
     let pattern = Array(initialData.nBeats);
     for (let i = 0; i < pattern.length; i++) {
-      pattern[i] = Array(initialData.nTracks).fill(0);
+      pattern[i] = Array(initialData.nTracks).fill(1);
     }
 
     this.data = {
